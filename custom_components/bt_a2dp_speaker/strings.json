@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bluetooth A2DP Speaker",
+        "description": "Configure your Bluetooth A2DP speaker. The speaker must already be paired with this system.",
+        "data": {
+          "name": "Friendly Name",
+          "mac_address": "Bluetooth MAC Address (e.g. AA:BB:CC:DD:EE:FF)",
+          "sink_name": "PulseAudio/PipeWire Sink Name (optional)"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Invalid MAC address format.",
+      "device_not_found": "Bluetooth device not found. Ensure it is paired.",
+      "connect_failed": "Could not connect to the device."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options",
+        "data": {
+          "connect_on_play": "Auto-connect when playback starts",
+          "disconnect_on_idle": "Disconnect when idle",
+          "idle_timeout": "Idle timeout (seconds)"
+        }
+      }
+    }
+  }
+}
