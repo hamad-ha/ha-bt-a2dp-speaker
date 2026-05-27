@@ -75,5 +75,4 @@ class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
         await self._controller.async_mute(mute)
 
     async def async_play_media(self, media_type: str, media_content_id: str, **kwargs):
-        """Play media (used by TTS)."""
         await self._controller.async_play_media(media_content_id)
