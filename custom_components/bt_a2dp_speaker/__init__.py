@@ -7,8 +7,12 @@ from .bt_controller import BluetoothController
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Bluetooth A2DP Speaker from a config entry."""
-    controller = BluetoothController(entry.data["mac"], entry.data.get("name", ""))
+    """Set up Bluetooth A2DP Speaker."""
+    controller = BluetoothController(
+        entry.data["mac"], 
+        entry.data.get("name", "P PRO3")
+    )
+    
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = controller
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
