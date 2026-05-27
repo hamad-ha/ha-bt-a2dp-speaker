@@ -1,4 +1,4 @@
-"""Support for Bluetooth A2DP Speaker as Media Player."""
+"""Support for Bluetooth A2DP Speaker."""
 from homeassistant.components.media_player import (
     MediaPlayerEntity,
     MediaPlayerEntityFeature,
@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .bt_controller import BTController
+from .bt_controller import BluetoothController
 
 
 async def async_setup_entry(
@@ -16,13 +16,13 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up the Bluetooth speaker from a config entry."""
+    """Set up Bluetooth speaker."""
     controller = hass.data[DOMAIN][config_entry.entry_id]
     async_add_entities([BluetoothSpeakerMediaPlayer(config_entry, controller)])
 
 
 class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
-    """Representation of a Bluetooth A2DP Speaker."""
+    """Bluetooth A2DP Speaker Media Player."""
 
     _attr_should_poll = True
     _attr_supported_features = (
@@ -36,11 +36,10 @@ class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
         | MediaPlayerEntityFeature.PLAY_MEDIA
     )
 
-    def __init__(self, config_entry, controller):
+    def __init__(self, config_entry: ConfigEntry, controller: BluetoothController):
         self._controller = controller
-        self._attr_name = config_entry.data.get("name", "Bluetooth Speaker")
+        self._attr_name = config_entry.data.get("name", "P PRO3")
         self._attr_unique_id = config_entry.entry_id
-        self.entity_id = f"media_player.{config_entry.data.get('name', 'bt_speaker').lower().replace(' ', '_')}"
 
     @property
     def state(self):
@@ -76,5 +75,4 @@ class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
         await self._controller.async_mute(mute)
 
     async def async_play_media(self, media_type: str, media_content_id: str, **kwargs):
-        """Play a URL or file (important for TTS)."""
         await self._controller.async_play_media(media_content_id)
