@@ -1,13 +1,12 @@
 """Config flow for Bluetooth A2DP Speaker."""
 from homeassistant import config_entries
-from homeassistant.core import callback
 import voluptuous as vol
 
 from .const import DOMAIN
 
 
 class BtA2dpSpeakerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Bluetooth A2DP Speaker."""
+    """Handle a config flow."""
 
     VERSION = 1
 
@@ -27,11 +26,6 @@ class BtA2dpSpeakerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }),
         )
 
-    @staticmethod
-    @callback
-    def async_get_options_flow(config_entry):
-        return BtA2dpSpeakerOptionsFlow(config_entry)
-
 
 class BtA2dpSpeakerOptionsFlow(config_entries.OptionsFlow):
     """Handle options flow."""
@@ -40,6 +34,7 @@ class BtA2dpSpeakerOptionsFlow(config_entries.OptionsFlow):
         self.config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
+        """Manage the options."""
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
