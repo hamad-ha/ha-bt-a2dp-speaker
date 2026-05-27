@@ -1,4 +1,4 @@
-"""Support for Bluetooth A2DP Speaker."""
+"""Support for Bluetooth A2DP Speaker as Media Player."""
 from homeassistant.components.media_player import (
     MediaPlayerEntity,
     MediaPlayerEntityFeature,
@@ -16,13 +16,13 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Bluetooth speaker."""
-    controller = hass.data[DOMAIN][config_entry.entry_id]
+    """Set up the Bluetooth speaker from a config entry."""
+    controller: BluetoothController = hass.data[DOMAIN][config_entry.entry_id]
     async_add_entities([BluetoothSpeakerMediaPlayer(config_entry, controller)])
 
 
 class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
-    """Bluetooth A2DP Speaker Media Player."""
+    """Representation of a Bluetooth A2DP Speaker."""
 
     _attr_should_poll = True
     _attr_supported_features = (
@@ -75,4 +75,5 @@ class BluetoothSpeakerMediaPlayer(MediaPlayerEntity):
         await self._controller.async_mute(mute)
 
     async def async_play_media(self, media_type: str, media_content_id: str, **kwargs):
+        """Play media (used by TTS)."""
         await self._controller.async_play_media(media_content_id)
