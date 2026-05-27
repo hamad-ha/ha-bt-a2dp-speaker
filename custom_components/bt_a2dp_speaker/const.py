@@ -1,6 +1,7 @@
 """Constants for the Bluetooth A2DP Speaker integration."""
 
 DOMAIN = "bt_a2dp_speaker"
+PLATFORMS = ["media_player"]
 
 # Config keys
 CONF_MAC_ADDRESS = "mac_address"
