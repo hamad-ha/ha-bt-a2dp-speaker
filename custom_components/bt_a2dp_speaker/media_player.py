@@ -16,8 +16,8 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up the Bluetooth speaker from a config entry."""
-    controller: BluetoothController = hass.data[DOMAIN][config_entry.entry_id]
+    """Set up the Bluetooth speaker."""
+    controller = hass.data[DOMAIN][config_entry.entry_id]
     async_add_entities([BluetoothSpeakerMediaPlayer(config_entry, controller)])
 
 
