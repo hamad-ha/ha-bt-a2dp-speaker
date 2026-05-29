@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bluetooth Audio",
+        "description": "Add a Bluetooth A2DP speaker or headset as a media player. The device must already be paired.",
+        "data": {
+          "name": "Friendly Name",
+          "mac_address": "Bluetooth MAC Address (e.g. 50:11:67:98:CE:D9)",
+          "sink_name": "PulseAudio Sink Name (leave blank for auto-detect)"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Invalid MAC address format.",
+      "device_not_found": "Device not found. Ensure it is paired via bluetoothctl.",
+      "connect_failed": "Could not connect to the device."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Bluetooth Audio Options",
+        "data": {
+          "connect_on_play": "Auto-connect when playback starts",
+          "disconnect_on_idle": "Disconnect when idle",
+          "idle_timeout": "Idle timeout (seconds)"
+        }
+      }
+    }
+  }
+}
