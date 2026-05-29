@@ -158,6 +158,7 @@ class BluetoothAudioEntity(MediaPlayerEntity):
         self._unsub_idle = async_track_time_interval(
             self.hass, self._async_idle_tick, timedelta(seconds=1)
         )
+        await self.async_update()
 
     async def async_will_remove_from_hass(self) -> None:
         """Unregister idle timeout callback when entity is removed."""
@@ -223,7 +224,7 @@ class BluetoothAudioEntity(MediaPlayerEntity):
                 self._bt_connected = False
                 self._player_state = MediaPlayerState.OFF
                 self._idle_seconds = 0
-                self._update_state()
+                self.async_write_ha_state()
         else:
             self._idle_seconds = 0
 
@@ -237,7 +238,7 @@ class BluetoothAudioEntity(MediaPlayerEntity):
             await self._ctrl.async_find_sink()
         else:
             _LOGGER.warning("Failed to connect to Bluetooth device %s", self._mac)
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_turn_off(self) -> None:
         """Turn off Bluetooth device."""
@@ -247,7 +248,7 @@ class BluetoothAudioEntity(MediaPlayerEntity):
         self._bt_connected = False
         self._player_state = MediaPlayerState.OFF
         self._reset_media_info()
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_media_play(self) -> None:
         """Play media."""
@@ -256,20 +257,20 @@ class BluetoothAudioEntity(MediaPlayerEntity):
             await self.async_turn_on()
         await self._ctrl.async_player_command("play")
         self._player_state = MediaPlayerState.PLAYING
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_media_pause(self) -> None:
         """Pause media."""
         await self._ctrl.async_player_command("pause")
         self._player_state = MediaPlayerState.PAUSED
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_media_stop(self) -> None:
         """Stop media."""
         await self._ctrl.async_player_command("stop")
         self._player_state = MediaPlayerState.IDLE
         self._reset_media_info()
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_media_next_track(self) -> None:
         """Play next track."""
@@ -289,7 +290,7 @@ class BluetoothAudioEntity(MediaPlayerEntity):
             self._volume = volume
         else:
             _LOGGER.warning("Failed to set volume for %s", self._mac)
-        self._update_state()
+        self.async_write_ha_state()
 
     async def async_mute_volume(self, mute: bool) -> None:
         """Mute or unmute volume."""
@@ -301,8 +302,4 @@ class BluetoothAudioEntity(MediaPlayerEntity):
             self._muted = mute
         else:
             _LOGGER.warning("Failed to set mute for %s", self._mac)
-        self._update_state()
-
-    def _update_state(self) -> None:
-        """Update Home Assistant state."""
         self.async_write_ha_state()
