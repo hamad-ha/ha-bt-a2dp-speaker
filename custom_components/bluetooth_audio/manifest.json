@@ -1,13 +1,12 @@
 {
   "domain": "bluetooth_audio",
   "name": "Bluetooth Audio",
-  "version": "2.0.0",
-  "documentation": "https://github.com/hamad-ha/bluetooth_speaker",
-  "issue_tracker": "https://github.com/hamad-ha/bluetooth_speaker/issues",
-  "requirements": [],
-  "dependencies": [],
-  "codeowners": [],
-  "iot_class": "local_push",
+  "codeowners": ["@hamad-ha"],
   "config_flow": true,
-  "icon": "mdi:bluetooth-audio"
+  "documentation": "https://github.com/hamad-ha/bluetooth_speaker",
+  "icon": "mdi:bluetooth-audio",
+  "issue_tracker": "https://github.com/hamad-ha/bluetooth_speaker/issues",
+  "iot_class": "local_push",
+  "requirements": [],
+  "version": "2.0.0"
 }
